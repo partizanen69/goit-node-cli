@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const contactsPath = path.resolve(__dirname, 'db/contacts.json');
+const contactsPath = path.resolve(path.join(__dirname, 'db', 'contacts.json'));
 
 export async function listContacts() {
   const json = await fsPromises.readFile(contactsPath, 'utf-8');
@@ -25,7 +25,7 @@ export async function removeContact(contactId) {
     return null;
   }
 
-  const removedContact = list.splice(idx, 1);
+  const [removedContact] = list.splice(idx, 1);
   await fsPromises.writeFile(contactsPath, JSON.stringify(list));
 
   return removedContact;
